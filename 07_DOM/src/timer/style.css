@@ -1,0 +1,22 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+  align-items: center;
+}
+.input {
+  margin-bottom: 20px;
+  min-height: 50px;
+  font-size: 30px;
+}
+.button {
+  padding: 10px;
+  margin-bottom: 20px;
+  min-width: 100px;
+  min-height: 30px;
+  font-size: 30px;
+}
+.div {
+  font-size: 50px;
+}
