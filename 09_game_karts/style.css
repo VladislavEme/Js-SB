@@ -1,0 +1,34 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 0;
+  min-width: 20%;
+  min-height: 200px;
+  background-color: #ccc;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.card_active {
+  background-color: khaki;
+}
+
+.card_coincidence {
+  background-color: green;
+}
