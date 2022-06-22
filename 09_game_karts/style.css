@@ -8,14 +8,14 @@ html {
   box-sizing: inherit;
 }
 
-.cards{
+.cards {
   display: flex;
   flex-wrap: wrap;
 }
 
 .card {
   margin: 0;
-  min-width: 20%;
+  min-width: 23%;
   min-height: 200px;
   background-color: #ccc;
   margin-right: 15px;
@@ -29,6 +29,33 @@ html {
   background-color: khaki;
 }
 
-.card_coincidence {
-  background-color: green;
+.cards_open {
+  background-color: #abebc9;
+}
+
+.pointer {
+  pointer-events: none;
+}
+
+.visible_none {
+  font-size: 0;
+}
+
+.open_animation {
+  animation-duration: 0.3s;
+  animation-name: open_one;
+}
+
+@keyframes open_one {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(0);
+  }
 }
