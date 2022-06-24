@@ -56,12 +56,12 @@ document.addEventListener("DOMContentLoaded", function () {
     gameOver.textContent = "Поражение! Время вышло!";
     restart.textContent = "Попробовать снова";
     let statis = document.createElement("span");
-    let secund = input.value * 2;
+    let secund = input.value * 5;
     labelTime.textContent = `Времени осталось: ${secund}`;
 
     restart.classList.add("button");
     timeGroup.classList.add("time-group");
-    labelTime.classList.add("label");
+    labelTime.classList.add("label_end");
 
     timeGroup.append(labelTime);
     timeGroup.append(time);
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
     form.classList.add("form");
     input.classList.add("input");
     buttonStart.classList.add("button");
-    label.classList.add("label");
+    label.classList.add("label_start");
     error.classList.add("error");
 
     // input.placeholder = "Число";
