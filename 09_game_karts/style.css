@@ -4,6 +4,7 @@
 
 html {
   box-sizing: border-box;
+  background-color: #f1f1f1;
 }
 
 *,
@@ -19,7 +20,8 @@ html {
   margin: auto 20px;
 }
 
-.groupEl {
+.form {
+  margin: 15% auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,12 +46,31 @@ html {
 }
 
 .button {
+  font-size: 40px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 2px solid rgb(129, 129, 129);
+}
+
+.restart {
   font-size: 30px;
   padding: 10px 15px;
+  border-radius: 20px;
+  border: 2px solid rgb(129, 129, 129);
+}
+
+button:hover {
+  background-color: #abebc9;
+  color: #fa8072;
+  border-color: #fa8072;
+}
+
+button:active {
+  background-color: #739e87;
 }
 
 .label {
-  font-size: 30px;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
@@ -61,11 +82,12 @@ html {
   min-width: var(--size-card);
   min-height: var(--size-card);
   background-color: #ccc;
-  margin-right: calc(var(--size-card)/20);
-  margin-bottom: calc(var(--size-card)/20);
+  margin-right: calc(var(--size-card) / 20);
+  margin-bottom: calc(var(--size-card) / 20);
   border-radius: 15px;
   text-align: center;
-  font-size: calc(var(--size-card)*0.8);
+  font-size: calc(var(--size-card) * 0.8);
+  cursor: pointer;
 }
 
 .card_active {
@@ -76,9 +98,34 @@ html {
   background-color: #abebc9;
 }
 
-/* .cards_wrong {
-  background-color: #ffa07a;
-} */
+.game-over {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: 15% auto;
+  color: #fa8072;
+  font-size: 100px;
+}
+
+.game-win {
+  color: #fa8072;
+  font-size: 60px;
+  margin: 0;
+  margin-right: 100px;
+}
+
+.time-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.statis {
+  font-size: 50px;
+  color: rgb(129, 129, 129);
+  margin-bottom: 30px;
+}
 
 .pointer {
   pointer-events: none;

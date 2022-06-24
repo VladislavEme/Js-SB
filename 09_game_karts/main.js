@@ -1,7 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   let arrCards = []; //массив карточек
+  let openCard = [];
   let cards = document.createElement("div");
-
+  let form = document.createElement("form");
+  let input = document.createElement("input");
+  let timeGroup = document.createElement("div");
+  let labelTime = document.createElement("span");
+  let time = document.createElement("span");
+  let gameOver = document.createElement("span");
+  let restart = document.createElement("button");
   //перемешивание карточек
   function shuffleArr(arr) {
     let j, temp;
@@ -45,55 +52,96 @@ document.addEventListener("DOMContentLoaded", function () {
     eventCard();
   }
 
+  function createTimer() {
+    gameOver.textContent = "Поражение! Время вышло!";
+    restart.textContent = "Попробовать снова";
+    let statis = document.createElement("span");
+    let secund = input.value * 2;
+    labelTime.textContent = `Времени осталось: ${secund}`;
+
+    restart.classList.add("button");
+    timeGroup.classList.add("time-group");
+    labelTime.classList.add("label");
+
+    timeGroup.append(labelTime);
+    timeGroup.append(time);
+    document.body.append(timeGroup);
+
+    restart.addEventListener("click", function () {
+      location.reload();
+    });
+
+    function sec() {
+      if (openCard.length == input.value) {
+        clearInterval(timer);
+      } else {
+        secund--;
+        labelTime.textContent = `Времени осталось: ${secund}`;
+      }
+      if (secund == 0) {
+        clearInterval(timer);
+        labelTime.remove();
+        cards.remove();
+        time.classList.add("game-over");
+        time.append(gameOver);
+        time.append(statis);
+        statis.textContent = `Открыто пар: ${openCard.length} из ${arrCards.length/2}`;
+        statis.classList.add("statis");
+        time.append(restart);
+      }
+    }
+
+    let timer = setInterval(sec, 1000);
+  }
+
   //
   function startGame() {
-    let groupEl = document.createElement("div");
-    let input = document.createElement("input");
     let buttonStart = document.createElement("button");
     let label = document.createElement("label");
     let error = document.createElement("span");
-    groupEl.classList.add("groupEl");
+    form.classList.add("form");
     input.classList.add("input");
     buttonStart.classList.add("button");
     label.classList.add("label");
     error.classList.add("error");
 
-    input.placeholder = "8";
+    // input.placeholder = "Число";
+    input.required = true;
     input.type = "number";
     input.max = "50";
     input.min = "2";
     label.textContent = "Введите кол-во пар карточек (2-50):";
     buttonStart.textContent = "Поехали!";
-    groupEl.append(label);
-    groupEl.append(input);
-    groupEl.append(buttonStart);
-    groupEl.append(error);
-    document.body.append(groupEl);
 
-    buttonStart.addEventListener("click", function () {
+    form.append(label);
+    form.append(input);
+    form.append(buttonStart);
+    form.append(error);
+    document.body.append(form);
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
       let amountCards = input.value;
       let sizeCard = 600;
-      if (amountCards > 50 || amountCards < 2 || amountCards.length === 0) {
-        error.textContent = "Недопустимое значение!";
-        error.classList.remove("error_no_visible");
-        error.classList.add("error_visible");
-      } else {
-        error.classList.remove("error_visible");
-        error.classList.add("error_no_visible");
-        createCards(amountCards * 2);
-        groupEl.remove();
 
-        //рассчет размера карточки от их кол-ва
-        for (let num = 0; num < amountCards; ) {
-          if (
-            document.body.clientHeight - document.documentElement.clientHeight >
-            0
-          ) {
-            sizeCard -= 5;
-            cards.style.setProperty("--size-card", sizeCard + "px");
-          } else {
-            num += 1;
-          }
+      error.classList.remove("error_visible");
+      error.classList.add("error_no_visible");
+
+      createTimer();
+
+      createCards(amountCards * 2);
+      form.remove();
+
+      //рассчет размера карточки от их кол-ва
+      for (let num = 0; num < amountCards; ) {
+        if (
+          document.body.clientHeight - document.documentElement.clientHeight >
+          0
+        ) {
+          sizeCard -= 5;
+          cards.style.setProperty("--size-card", sizeCard + "px");
+        } else {
+          num += 1;
         }
       }
     });
@@ -107,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
     card.forEach(function (cardClick) {
       cardClick.addEventListener("click", function () {
         if (!cardActive) {
-          console.log(`нажата первая карточка ${cardClick.textContent}`);
+          // console.log(`нажата первая карточка ${cardClick.textContent}`);
           cardClick.classList.add("open_animation");
 
           function openOneCard() {
@@ -120,26 +168,39 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           setTimeout(() => openOneCard(), 150);
         } else if (cardActive) {
-          console.log(`нажата вторая карточка ${cardClick.textContent}`);
+          // console.log(`нажата вторая карточка ${cardClick.textContent}`);
           cardClick.classList.add("open_animation");
 
           if (cardClick.textContent === numCard) {
-            console.log("карточки совпадают");
+            // console.log("карточки совпадают");
 
             function openTwoCardIdent() {
               cardClick.classList.add("card_active");
               card.forEach(function (el) {
                 if (el.textContent === contentCardActive) {
-                  console.log(el.textContent);
+                  // console.log(el.textContent);
                   el.classList.add("cards_open");
                   el.classList.add("pointer");
                   el.classList.remove("visible_none");
                 }
               });
             }
+
             setTimeout(() => openTwoCardIdent(), 150);
+
+            openCard.push(true);
+            // console.log(openCard);
+
+            if (openCard.length == input.value) {
+              console.log("Победа!");
+              time.remove();
+              labelTime.classList.add("game-win");
+              labelTime.textContent = "Победа!";
+              restart.classList.add("restart");
+              timeGroup.append(restart);
+            }
           } else {
-            console.log("Карточки не совпадают");
+            // console.log("Карточки не совпадают");
 
             cardClick.classList.add("open_animation");
 
@@ -165,7 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
               });
               cards.classList.remove("pointer");
             }
-
             setTimeout(() => closeCard(), 700);
           }
           cardActive = !cardActive;
@@ -173,7 +233,5 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-
   startGame();
-  // createCards(16);
 });
